@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Two Numbers"
+        android:textAlignment="center"
+        android:textSize="16pt"
+        ></TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="a:"
+            android:textSize="10pt"
+            android:layout_margin="20dp"
+            >
+        </TextView>
+        <EditText
+            android:id="@+id/number_a"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="b:"
+            android:textSize="10pt"
+            android:layout_margin="20dp"
+            >
+        </TextView>
+        <EditText
+            android:id="@+id/number_b"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        </EditText>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="30pt"
+            android:layout_height="20pt"
+            android:layout_margin="5pt"
+            android:text="+"></Button>
+
+        <Button
+            android:id="@+id/btn_sub"
+            android:layout_width="30pt"
+            android:layout_height="20pt"
+            android:layout_margin="5pt"
+            android:text="-"></Button>
+
+        <Button
+            android:id="@+id/btn_mul"
+            android:layout_width="30pt"
+            android:layout_height="20pt"
+            android:layout_margin="5pt"
+            android:text="*"></Button>
+
+        <Button
+            android:id="@+id/btn_div"
+            android:layout_width="30pt"
+            android:layout_height="20pt"
+            android:layout_margin="5pt"
+            android:text="/"></Button>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list_exp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        ></ListView>
+
+</LinearLayout>
