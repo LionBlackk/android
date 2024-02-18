@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- login___sign_up strings -->
+
+	<string name="app_name">Mockups</string>
+	<string name="ek_img_content">ExportKit Image</string>
+	<string name="already_have_account__log_in_string">Already have account? Log In</string>
+	<string name="sign_up_with_email_string">Sign up with email</string>
+	<string name="continue_with_apple_string">Continue with Apple</string>
+	<string name="continue_with_facebook_string">Continue with Facebook</string>
+	<string name="continue_with_google_string">Continue with Google</string>
+	<string name="or_use_social_sign_up_string">or use social sign up</string>
+</resources>
