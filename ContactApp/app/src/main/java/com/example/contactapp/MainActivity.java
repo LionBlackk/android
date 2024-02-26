@@ -1,8 +1,11 @@
 package com.example.contactapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private ContactAdapter contactAdapter;
     private AppDatabase db;
     private ContactDao contactDao;
+    private static final int REQUEST_CODE_ADD_CONTACT = 1; // Định nghĩa một request code
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,44 +35,47 @@ public class MainActivity extends AppCompatActivity {
         contactList = new ArrayList<Contact>();
         contactAdapter = new ContactAdapter(contactList);
         binding.rvContact.setAdapter(contactAdapter);
-
-        contactList.add(new Contact("Nguyen Van A", "123456789", "a@gmail.com"));
         contactAdapter.notifyDataSetChanged();
-        insertContactAndLoadData();
-//        AsyncTask.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                db = AppDatabase.getInstance(getApplicationContext());
-//                contactDao = db.contactDao();
-//                contactDao.insertAll(new Contact("Vo Phuoc Hoang", "123456789", "vophuochoang93@gmail.com"));
-//
-//                contactList = new ArrayList<Contact>(contactDao.getAll());
-//                contactAdapter.notifyDataSetChanged();
-//            }
-//        });
 
+        loadContacts();
+
+        binding.btnAddContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AddContactActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
 
     }
-    private void insertContactAndLoadData() {
+
+    private void loadContacts(){
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                 db = AppDatabase.getInstance(getApplicationContext());
                 contactDao = db.contactDao();
-                contactDao.insertAll(new Contact("Vo Phuoc Hoang", "123456789", "vophuochoang93@gmail.com"));
-                loadContacts();
+                final ArrayList<Contact> loadedContacts = new ArrayList<>();
+                loadedContacts.addAll(contactDao.getAll());
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        contactList.clear();
+                        contactList.addAll(loadedContacts);
+                        contactAdapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            contactList.clear();
+            loadContacts();
 
-    private void loadContacts() {
-        contactList.clear();
-        contactList.addAll(contactDao.getAll());
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                contactAdapter.notifyDataSetChanged();
-            }
-        });
+        }
     }
 }
