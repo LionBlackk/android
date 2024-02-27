@@ -12,4 +12,7 @@ public interface ContactDao {
     List<Contact> getAll();
     @Insert
     void insertAll(Contact... contacts);
+
+    @Query("SELECT * FROM Contact WHERE name LIKE :searchQuery || '%'")
+    List<Contact> searchContacts(String searchQuery);
 }

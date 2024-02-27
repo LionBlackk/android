@@ -1,13 +1,18 @@
 package com.example.contactapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.contactapp.databinding.ActivityMainBinding;
@@ -22,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private AppDatabase db;
     private ContactDao contactDao;
     private static final int REQUEST_CODE_ADD_CONTACT = 1; // Định nghĩa một request code
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +48,15 @@ public class MainActivity extends AppCompatActivity {
         binding.btnAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("btnAddContact", "clicked");
                 Intent intent = new Intent(MainActivity.this, AddContactActivity.class);
                 startActivityForResult(intent, 1);
             }
         });
+
+        Toolbar toolbar = binding.mainToolbar;
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
     }
 
@@ -77,5 +88,61 @@ public class MainActivity extends AppCompatActivity {
             loadContacts();
 
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Log.d("item.getItemId()", String.valueOf(item.getItemId()));
+        Log.d("item.getItemId()", String.valueOf(R.id.action_search));
+        if (item.getItemId() == R.id.action_search) {
+            // Hiển thị ô tìm kiếm
+            SearchView searchView = (SearchView) item.getActionView();
+            Log.d("searchView", searchView.toString());
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    // Xử lý khi người dùng nhấn enter hoặc nút tìm kiếm
+                    searchContacts(query);
+                    Log.d("query:", query);
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    // Xử lý khi người dùng thay đổi văn bản trong ô tìm kiếm
+                    searchContacts(newText);
+                    Log.d("newText:", newText);
+                    return true;
+                }
+            });
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void searchContacts(final String query) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                db = AppDatabase.getInstance(getApplicationContext());
+                contactDao = db.contactDao();
+                final ArrayList<Contact> searchResults = new ArrayList<>();
+                searchResults.addAll(contactDao.searchContacts(query));
+                Log.d("searchResults: ", String.valueOf(searchResults.size()));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        contactList.clear();
+                        contactList.addAll(searchResults);
+                        contactAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
     }
 }
