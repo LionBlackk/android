@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private ContactAdapter contactAdapter;
     private AppDatabase db;
     private ContactDao contactDao;
-    private static final int REQUEST_CODE_ADD_CONTACT = 1; // Định nghĩa một request code
-    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +46,30 @@ public class MainActivity extends AppCompatActivity {
         binding.btnAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("btnAddContact", "clicked");
                 Intent intent = new Intent(MainActivity.this, AddContactActivity.class);
-                startActivityForResult(intent, 1);
+                startActivityIfNeeded(intent, 1);
             }
         });
 
         Toolbar toolbar = binding.mainToolbar;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        binding.rvContact.addOnItemTouchListener(
+                new RecyclerItemClickListener(getApplicationContext(), binding.rvContact ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(MainActivity.this, DetailContactActivity.class);
+                        intent.putExtra("id", String.valueOf(contactList.get(position).getId()));
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
 
     }
 
@@ -68,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                 contactDao = db.contactDao();
                 final ArrayList<Contact> loadedContacts = new ArrayList<>();
                 loadedContacts.addAll(contactDao.getAll());
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -80,13 +92,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
             contactList.clear();
             loadContacts();
-
         }
     }
 
@@ -145,4 +157,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }

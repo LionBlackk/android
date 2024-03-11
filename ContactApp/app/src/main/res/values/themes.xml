@@ -16,5 +16,15 @@
         <item name="icon"></item>
     </style>
 
+    <style name="AppSearchView" parent="Widget.AppCompat.SearchView" >
+<!--        &lt;!&ndash; Text Size &ndash;&gt;-->
+<!--        <item name="android:textSize">@dimen/textSizePrimary</item>-->
+<!--        &lt;!&ndash; Query Text Color &ndash;&gt;-->
+<!--        <item name="android:textColorPrimary">@color/textColorPrimary</item>-->
+<!--        &lt;!&ndash; Hint Color &ndash;&gt;-->
+<!--        <item name="android:textColorHint">@color/textColorDisabled</item>-->
+        <!-- Icon Color -->
+        <item name="android:tint">@color/white</item>
+    </style>
 
 </resources>
