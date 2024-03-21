@@ -14,9 +14,11 @@
         android:layout_margin="10dp"
         >
         <LinearLayout
+            android:id="@+id/item_layout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:visibility="visible"
             >
 
             <ImageView
@@ -61,6 +63,7 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/iv_fav"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/heart"
@@ -70,11 +73,42 @@
                     android:scaleType="fitCenter"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="150dp"
+                    android:clickable="true"
+                    android:onClick="onHeartClicked"
                     />
             </RelativeLayout>
 
 
         </LinearLayout>
 
+
+        <LinearLayout
+            android:id="@+id/item_layout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+        >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{dog.name}"
+                android:textSize="20dp"
+                android:textAlignment="textStart"
+                android:paddingLeft="5dp"
+                android:maxWidth="160dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{dog.origin}"
+                android:textSize="16dp"
+                android:textAlignment="textStart"
+                android:paddingLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:maxWidth="160dp"
+                />
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

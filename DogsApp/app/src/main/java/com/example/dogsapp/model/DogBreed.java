@@ -15,6 +15,7 @@ public class DogBreed implements Serializable {
     public String origin;
     @SerializedName("url")
     public String url;
+    private boolean isFav;
 
     public DogBreed(int id, String name, String lifeSpan, String origin, String url) {
         this.id = id;
@@ -22,6 +23,7 @@ public class DogBreed implements Serializable {
         this.lifeSpan = lifeSpan;
         this.origin = origin;
         this.url = url;
+        this.isFav = false;
     }
 
     public int getId() {
@@ -58,6 +60,14 @@ public class DogBreed implements Serializable {
 
     public String getUrl() {
         return url;
+    }
+
+    public boolean isFav() {
+        return isFav;
+    }
+
+    public void setFav(boolean fav) {
+        isFav = fav;
     }
 
     public void setUrl(String url) {
