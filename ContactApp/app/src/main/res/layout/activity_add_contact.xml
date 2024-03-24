@@ -5,12 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddContactActivity"
+    tools:context=".view.AddContactActivity"
     android:orientation="vertical"
     >
     
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/add_activity_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:titleMarginStart="40sp"
@@ -18,13 +18,12 @@
         android:background="@color/blue"
         app:titleTextColor="@color/white"
         android:theme="@style/AppTheme.ActionBar"
-        tools:ignore="MissingConstraints"
         >
         <ImageView
             android:id="@+id/btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_cancel_24"
+            android:src="@drawable/baseline_arrow_back_ios_24"
             android:padding="8dp"/>
 
         <TextView

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout>
+    <data>
+        <variable
+            name="contact"
+            type="com.example.contactapp.model.Contact" />
+    </data>
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -24,7 +30,7 @@
             android:id="@+id/tv_phone_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="123456789"
+            android:text="@{contact.phoneNumber}"
             android:layout_gravity="center"
             android:textSize="16dp"
             android:layout_margin="20dp"
@@ -34,7 +40,7 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name"
+            android:text="@{contact.name}"
             android:layout_gravity="center"
             android:textSize="16dp"
             android:layout_margin="20dp"
@@ -43,3 +49,4 @@
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
+</layout>

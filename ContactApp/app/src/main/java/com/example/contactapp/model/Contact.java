@@ -1,11 +1,15 @@
-package com.example.contactapp;
+package com.example.contactapp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class Contact {
+public class Contact implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     @ColumnInfo
@@ -19,6 +23,12 @@ public class Contact {
         this.phoneNumber = phoneNumber;
         this.name = name;
         this.email = email;
+    }
+    protected Contact(Parcel in) {
+        id = in.readInt();
+        phoneNumber = in.readString();
+        name = in.readString();
+        email = in.readString();
     }
 
     public int getId() {
@@ -52,4 +62,28 @@ public class Contact {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.phoneNumber);
+        dest.writeString(this.name);
+        dest.writeString(this.email);
+    }
+    public static final Creator<Contact> CREATOR = new Creator<Contact>() {
+        @Override
+        public Contact createFromParcel(Parcel in) {
+            return new Contact(in);
+        }
+
+        @Override
+        public Contact[] newArray(int size) {
+            return new Contact[size];
+        }
+    };
 }

@@ -1,4 +1,4 @@
-package com.example.contactapp;
+package com.example.contactapp.model;
 
 import android.content.Context;
 
@@ -8,12 +8,18 @@ import androidx.room.RoomDatabase;
 
 @Database(entities = {Contact.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
+    public static final String DATABASE_NAME = "contacts";
+    private static final Object LOCK = new Object();
     private static AppDatabase instance;
     public abstract ContactDao contactDao();
     public static AppDatabase getInstance(Context context){
         if(instance == null){
-            instance = Room.databaseBuilder(context,
-                    AppDatabase.class, "contacts").build();
+            synchronized (LOCK){
+                if(instance == null){
+                    instance = Room.databaseBuilder(context,
+                            AppDatabase.class, DATABASE_NAME).build();
+                }
+            }
         }
         return instance;
     }

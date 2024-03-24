@@ -1,5 +1,6 @@
-package com.example.contactapp;
+package com.example.contactapp.model;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -10,15 +11,15 @@ import java.util.List;
 @Dao
 public interface ContactDao {
     @Query("SELECT * FROM Contact")
-    List<Contact> getAll();
+    LiveData<List<Contact>> getAll();
     @Insert
     void insertAll(Contact... contacts);
 
-    @Query("SELECT * FROM Contact WHERE name LIKE :searchQuery || '%'")
-    List<Contact> searchContacts(String searchQuery);
+    @Query("SELECT * FROM Contact WHERE name LIKE '%' || :searchQuery || '%'")
+    LiveData<List<Contact>> searchContacts(String searchQuery);
 
     @Query("SELECT * FROM Contact WHERE id = :id")
-    Contact searchContact(String id);
+    LiveData<Contact> searchContact(String id);
 
     @Update
     void update(Contact contact);
